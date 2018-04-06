@@ -32,9 +32,8 @@ public  class CassandraDDL {
                 "  content text,\n" +
                 "  modified timestamp,\n" +
                 "  diffs_json text,\n" +
-                "  revision int,\n" +
-                "  PRIMARY KEY(name, revision)\n" +
-                ") WITH CLUSTERING ORDER BY (revision ASC)";
+                "  PRIMARY KEY(name, modified)\n" +
+                ") WITH CLUSTERING ORDER BY (modified ASC)";
         session.execute(query);
     }
 
@@ -46,33 +45,22 @@ public  class CassandraDDL {
                 "  modified timestamp,\n" +
                 "  diffs_json text,\n" +
                 "  parent text,\n" +
-                "  revision int,\n" +
-                "  PRIMARY KEY(name, revision)\n" +
-                ") WITH CLUSTERING ORDER BY (revision ASC);";
+                "  PRIMARY KEY(name, modified)\n" +
+                ") WITH CLUSTERING ORDER BY (modified ASC);";
         session.execute(query);
-        session.execute("create index IF NOT EXISTS " + NameTable +"_modified on " + NameTable + "(modified);");
     }
 
-   /* public static void createTableAuthors(Session session, String NameTable) {
+   public static void createTableAuthors(Session session, String NameTable) {
         String query = "CREATE TABLE IF NOT EXISTS " +
                 NameTable +
                 "(login text, " +
-                "event_time timestamp, " +
-                "name text, " +
-                "status text, " +
-                "primary key (login,event_time));";
+                "modified timestamp, " +
+                "table_name text, " +
+                "action text, " +
+                "primary key (login,modified));";
         session.execute(query);
     }
 
-    public static void createTableAttachments (Session session, String NameTable) {
-        String query = "CREATE TABLE IF NOT EXISTS " +
-                NameTable +
-                "(filename text, " +
-                "event_time timestamp, " +
-                "diff_json text, " +
-                "primary key (filename,event_time));";
-        session.execute(query);
-    }*/
 
     public static void dropTable(Session session, String NameTable){
         String query = "DROP TABLE IF EXISTS " + NameTable;

@@ -8,6 +8,7 @@ import entity.Pages;
 import entity.Spaces;
 import interfaces.PagesAccessor;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,19 +26,17 @@ public class PagesCRUD {
         pagesAccessor = manager.createAccessor(PagesAccessor.class);
     }
 
-
-
     public void insertPages(Pages pages){
         mapper.save(pages);
     }
     public void updatePages(Pages pages){
         mapper.save(pages);
     }
-    public Pages findPages(String name, int revision){
-        return mapper.get(name,revision);
+    public Pages findPages(String name, Date modified){
+        return mapper.get(name,modified);
     }
-    public void deletePages(String name, int revision){
-        mapper.delete(name,revision);
+    public void deletePages(String name, Date modified){
+        mapper.delete(name,modified);
     }
 
     public List<Spaces> getAll(){
@@ -50,14 +49,17 @@ public class PagesCRUD {
         return res.all();
     }
 
-    public List<Spaces> getAllBetweenRevision(String name, int rev1, int rev2){
-        Result<Spaces> res = pagesAccessor.getAllBetweenRevision(name, rev1, rev2);
+    public List<Spaces> getAllBetweenTime(String name, Date time1, Date time2){
+        Result<Spaces> res = pagesAccessor.getAllBetweenTime(name, time1, time2);
         return res.all();
     }
 
-    public  List<Spaces> getLastRevisionsByName(String name, int count){
-        Result<Spaces> res = pagesAccessor.getLastRevisionsByName(name, count);
+    public  List<Spaces> getLastRowsByName(String name, int count){
+        Result<Spaces> res = pagesAccessor.getLastRowsByName(name, count);
         return res.all();
     }
 
+    public void insertNow(String name, String content, String diff_json){
+        pagesAccessor.insertNow(name,content,diff_json);
+    }
 }

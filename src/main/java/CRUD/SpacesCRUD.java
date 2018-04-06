@@ -33,11 +33,11 @@ public class SpacesCRUD {
     public void updateSpaces(Spaces space){
         mapper.save(space);
     }
-    public Spaces findSpaces(String name, int revision){
-        return mapper.get(name,revision);
+    public Spaces findSpaces(String name, Date modified){
+        return mapper.get(name,modified);
     }
-    public void deleteSpaces(String name, int revision){
-        mapper.delete(name,revision);
+    public void deleteSpaces(String name, Date modified){
+        mapper.delete(name,modified);
     }
 
 
@@ -51,19 +51,18 @@ public class SpacesCRUD {
         return res.all();
     }
 
-    public List<Spaces> getAllBetweenRevision(String name, int rev1, int rev2){
-        Result<Spaces> res = spacesAccessor.getAllBetweenRevision(name, rev1, rev2);
-        return res.all();
-    }
-
-    public  List<Spaces> getLastRevisionsByName(String name, int count){
-        Result<Spaces> res = spacesAccessor.getLastRevisionsByName(name, count);
-        return res.all();
-    }
-
-    /*public List<Spaces> getAllBetweenTime(String name, Date time1, Date time2){
+    public List<Spaces> getAllBetweenTime(String name, Date time1, Date time2){
         Result<Spaces> res = spacesAccessor.getAllBetweenTime(name, time1, time2);
         return res.all();
-    }*/
+    }
+
+    public  List<Spaces> getLastRowsByName(String name, int count){
+        Result<Spaces> res = spacesAccessor.getLastRowsByName(name, count);
+        return res.all();
+    }
+
+    public void insertNow(String name, String description, String diff_json, String parent){
+        spacesAccessor.insertNow(name,description,diff_json,parent);
+    }
 
 }

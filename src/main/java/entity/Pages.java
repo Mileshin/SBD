@@ -19,9 +19,8 @@ public class Pages {
     @PartitionKey(0)
     private String name;
     @PartitionKey(1)
-    private int revision;
-    private String content;
     private Date modified;
+    private String content;
     @Column(name = "diffs_json")
     private String diffsJson;
 
@@ -30,13 +29,6 @@ public class Pages {
     }
     public void setName(String name){
         this.name = name;
-    }
-
-    public int getRevision(){
-        return revision;
-    }
-    public void setRevision(int revision){
-        this.revision = revision;
     }
 
     public String getContent(){
@@ -64,9 +56,8 @@ public class Pages {
 
     public Pages(){};
 
-    public Pages(int revision, String name, String content,
+    public Pages(String name, String content,
                  Date modified, String diffsJson){
-        this.revision = revision;
         this.name = name;
         this.content = content;
         this.modified = modified;

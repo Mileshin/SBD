@@ -1,3 +1,4 @@
+import CRUD.AuthorsCRUD;
 import CRUD.PagesCRUD;
 import CRUD.SpacesCRUD;
 import controlers.datastax.CassandraConnector;
@@ -26,67 +27,37 @@ public class App {
         CassandraDDL.useKeyspace(test.getSession(),"testkeyspace");
         CassandraDDL.createTableSpaces(test.getSession(),"spaces");
         CassandraDDL.createTablePages(test.getSession(),"pages");
+        CassandraDDL.createTableAuthors(test.getSession(), "authors");
 
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        Date date = format.parse("2018-04-03 20:25:10");
-        Date date1 = format.parse("2018-04-03 20:05:10");
+        Date date = format.parse("2018-04-03 21:25:10");
+        Date date1 = format.parse("2018-04-03 10:05:10");
 
         SpacesCRUD spacesCRUD = new SpacesCRUD(test.getSession());
-        spacesCRUD.insertSpaces(new Spaces(6,"fff","trtt",date,"json","parent"));
-        System.out.println(spacesCRUD.findSpaces("fff",1).getDescription());
-        spacesCRUD.updateSpaces(new Spaces(7,"fff","tRtt",date,"json","parent"));
-        System.out.println(spacesCRUD.findSpaces("fff",1).getDescription());
+        spacesCRUD.insertSpaces(new Spaces("fff","trtt",date,"json","parent"));
+        System.out.println(spacesCRUD.findSpaces("fff",date).getDescription());
+        spacesCRUD.updateSpaces(new Spaces("fff","tRtt",date1,"json","parent"));
+        System.out.println(spacesCRUD.findSpaces("fff",date1).getDescription());
       //  spacesCRUD.deleteSpaces("fff",1);
        // System.out.println(spacesCRUD.findSpaces("fff",1).getDescription());
 
         System.out.println(spacesCRUD.getAll());
         System.out.println(spacesCRUD.getAllByName("fff"));
-        List<Spaces> tt = spacesCRUD.getAllBetweenRevision("fff",2,4);
-        tt = spacesCRUD.getLastRevisionsByName("fff",2);
-       // tt = spacesCRUD.getAllBetweenTime("fff",date1,date);
+        List<Spaces> tt = spacesCRUD.getLastRowsByName("fff",2);
+        tt = spacesCRUD.getAllBetweenTime("fff",date1,date);
+        spacesCRUD.insertNow("test","des","diff", "parent");
 
 
         PagesCRUD pagesCRUD = new PagesCRUD(test.getSession());
-        pagesCRUD.insertPages(new Pages(1,"ttt","content",date,"json"));
-        System.out.println(pagesCRUD.findPages("ttt",1).getContent());
-        pagesCRUD.insertPages(new Pages(1,"ttt","CONTENT",date,"json"));
-        System.out.println(pagesCRUD.findPages("ttt",1).getContent());
-        pagesCRUD.deletePages("fff",1);
+        pagesCRUD.insertPages(new Pages("ttt","content",date,"json"));
+        System.out.println(pagesCRUD.findPages("ttt",date).getContent());
+        pagesCRUD.insertPages(new Pages("ttt","CONTENT",date1,"json"));
+        System.out.println(pagesCRUD.findPages("ttt",date1).getContent());
+       // pagesCRUD.insertNow("test","content","test_json");
 
-
-
-
-       /* // create tables
-        test.createTablePages("pages");
-        test.createTableSpaces("spaces");
-        test.createTableAuthors("authors");
-        test.createTableAttachments("attachments");
-
-        // insert
-        test.insertIntoPages("pages","test_name","test");
-        test.insertIntoSpaces("spaces","test_name","test");
-        test.insertIntoAuthors("authors","test_login","test_name","test_status");
-        test.insertIntoAttachments("Attachments","test_filename","test");
-
-        // select
-        /*List<Row> rows = test.retriveValues("pages");
-        if(rows != null) {
-            for(Row row : rows) {
-                System.out.println(row);
-            }
-        } else {
-            System.out.println("empty");
-        }*/
-
-       // System.out.println(test.getRow("pages","name","test_name", "2018-04-03 20:15:09"));
-
-
-        // drop tables
-        /*test.dropTable("pages");
-        test.dropTable("spaces");
-        test.dropTable("authors");
-        test.dropTable("attachments");*/
+        AuthorsCRUD authorsCRUD = new AuthorsCRUD(test.getSession());
+        authorsCRUD.insertNow("user_login","spaces","diff_json");
 
         test.close();
     }

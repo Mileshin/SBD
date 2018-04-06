@@ -18,9 +18,8 @@ import java.util.Date;
 public class Spaces {
     @PartitionKey(0)
     private String name;
-    @PartitionKey(1)
-    private int revision;
     private String description;
+    @PartitionKey(1)
     private Date modified;
     @Column(name = "diffs_json")
     private String diffsJson;
@@ -31,13 +30,6 @@ public class Spaces {
     }
     public void setName(String name){
         this.name = name;
-    }
-
-    public int getRevision(){
-        return revision;
-    }
-    public void setRevision(int revision){
-        this.revision = revision;
     }
 
     public String getDescription(){
@@ -71,9 +63,8 @@ public class Spaces {
 
     public  Spaces(){};
 
-    public Spaces(int revision, String name, String description,
+    public Spaces(String name, String description,
                   Date modified, String diffsJson,String parent){
-        this.revision = revision;
         this.name = name;
         this.description = description;
         this.modified = modified;
