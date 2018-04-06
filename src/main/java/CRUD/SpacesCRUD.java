@@ -19,7 +19,7 @@ import java.util.List;
 public class SpacesCRUD {
     private MappingManager manager;
     private Mapper<Spaces> mapper;
-    SpacesAccessor spacesAccessor;
+    private SpacesAccessor spacesAccessor;
 
     public SpacesCRUD(Session session){
         manager = new MappingManager(session);
