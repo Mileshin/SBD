@@ -1,17 +1,8 @@
 #!/bin/sh
-store_path=/var/lib/cassandra
 
 #Stop nodes
-docker stop some-cassandra3 
-docker stop some-cassandra2 
-docker stop some-cassandra 
+docker stop some-cassandra3 some-cassandra some-cassandra2 coordinator-cassandra
 
 #Delete nodes
-docker rm some-cassandra 
-docker rm some-cassandra2 
-docker rm some-cassandra3 
+docker rm some-cassandra some-cassandra2 some-cassandra3 coordinator-cassandra
 
-# Delete storage
-rm -rf $store_path/c1
-rm -rf $store_path/c2
-rm -rf $store_path/c3
