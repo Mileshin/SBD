@@ -15,18 +15,23 @@ import java.util.Date;
 @Accessor
 public interface SpacesAccessor {
     @Query("SELECT * FROM spaces")
+    @QueryParameters(consistency="ONE")
     Result<Spaces> getAll();
 
     @Query("SELECT * FROM spaces WHERE name = :n")
+    @QueryParameters(consistency="ONE")
     Result<Spaces> getAllByName(@Param("n") String name);
 
     @Query("SELECT * FROM spaces where name = :n ORDER BY modified DESC LIMIT :m")
+    @QueryParameters(consistency="ONE")
     Result<Spaces> getLastRowsByName(@Param("n") String name, @Param("m") int count);
 
     @Query("SELECT * FROM spaces WHERE name = :n AND modified > :m AND modified < :k")
+    @QueryParameters(consistency="ONE")
     Result<Spaces> getAllBetweenTime(@Param("n") String name, @Param("m") Date time1, @Param("k") Date time2);
 
     @Query("INSERT INTO spaces(modified,name,description,diffs_json,parent)values(dateof(now()),?,?,?,?)")
+    @QueryParameters(consistency="ONE")
     ResultSet insertNow(String name, String description, String diff_json, String parent);
 
 }

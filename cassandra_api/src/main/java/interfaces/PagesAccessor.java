@@ -15,18 +15,23 @@ import java.util.Date;
 @Accessor
 public interface PagesAccessor {
     @Query("SELECT * FROM pages")
+    @QueryParameters(consistency="ONE")
     Result<Spaces> getAll();
 
     @Query("SELECT * FROM pages WHERE name = :n")
+    @QueryParameters(consistency="ONE")
     Result<Spaces> getAllByName(@Param("n") String name);
 
     @Query("SELECT * FROM pages where name = :n ORDER BY modified DESC LIMIT :m")
+    @QueryParameters(consistency="ONE")
     Result<Spaces> getLastRowsByName(@Param("n") String name, @Param("m") int count);
 
     @Query("SELECT * FROM pages WHERE name = :n AND modified > :m AND modified < :k")
+    @QueryParameters(consistency="ONE")
     Result<Spaces> getAllBetweenTime(@Param("n") String name, @Param("m") Date time1, @Param("k") Date time2);
 
     @Query("INSERT INTO pages(modified,name,content,diffs_json)values(dateof(now()),?,?,?)")
+    @QueryParameters(consistency="ONE")
     ResultSet insertNow(String name, String content, String diff_json);
 
 
