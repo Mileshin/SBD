@@ -19,6 +19,19 @@ public  class CassandraDDL {
         String query = sb.toString();
         session.execute(query);
     }
+    public static void createKeyspaceNet(Session session, String keyspaceName,
+                                         String replicationStrategy, String dc) {
+        StringBuilder sb =
+                new StringBuilder("CREATE KEYSPACE IF NOT EXISTS ")
+                        .append(keyspaceName).append(" WITH replication = {")
+                        .append("'class': '").append(replicationStrategy)
+                        .append("', ").append(dc)
+                        .append("};");
+
+        String query = sb.toString();
+        //  System.out.print(query);
+        session.execute(query);
+    }
 
     public static void useKeyspace(Session session, String keyspaceName){
         session.execute("USE " + keyspaceName);

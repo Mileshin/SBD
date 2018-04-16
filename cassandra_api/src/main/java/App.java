@@ -20,10 +20,11 @@ public class App {
     public static void main(String[] args) throws ParseException {
         // connect
         CassandraConnector test = new CassandraConnector();
-        test.connect("localhost",9042);
+        test.connect("192.168.1.184",9042);
 
         // choose keyspace
-        CassandraDDL.createKeyspace(test.getSession(),"testkeyspace","SimpleStrategy",3);
+        CassandraDDL.createKeyspaceNet(test.getSession(),"testkeyspace","NetworkTopologyStrategy","'datacenter1' : 1, 'datacenter2' : 1, 'datacenter3' : 1");
+        //CassandraDDL.createKeyspace(test.getSession(),"testkeyspace","SimpleStrategy",3);
         CassandraDDL.useKeyspace(test.getSession(),"testkeyspace");
         CassandraDDL.createTableSpaces(test.getSession(),"spaces");
         CassandraDDL.createTablePages(test.getSession(),"pages");
