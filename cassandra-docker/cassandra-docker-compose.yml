@@ -1,0 +1,50 @@
+version: '2'
+
+# 3 node cluster
+
+networks:
+  cassandra_lan:
+
+services:
+  cassandra-node1:
+    container_name: cassandra-node1
+    image: cassandra:3.11.2
+    ports:
+      - "9042:9042"  # Native transport
+      - "9160:9160"  # Thrift clients
+    environment:
+      - MAX_HEAP_SIZE=500M
+      - HEAP_NEWSIZE=256M
+      - CASSANDRA_CLUSTER_NAME="wiki"
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=datacenter1
+
+  cassandra-node2:
+    container_name: cassandra-node2
+    image: cassandra:3.11.2
+    ports:
+      - "9043:9042"  # Native transport
+      - "9161:9160"  # Thrift clients
+    environment:
+      - MAX_HEAP_SIZE=500M
+      - HEAP_NEWSIZE=256M
+      - CASSANDRA_CLUSTER_NAME="wiki"
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=datacenter1
+      - CASSANDRA_SEEDS=cassandra-node1
+
+  cassandra-node3:
+    container_name: cassandra-node3
+    image: cassandra:3.11.2
+    ports:
+      - "9044:9042"  # Native transport
+      - "9162:9160"  # Thrift clients
+    environment:
+      - MAX_HEAP_SIZE=500M
+      - HEAP_NEWSIZE=256M
+      - CASSANDRA_CLUSTER_NAME="wiki"
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=datacenter1
+      - CASSANDRA_SEEDS=cassandra-node1
+
+
