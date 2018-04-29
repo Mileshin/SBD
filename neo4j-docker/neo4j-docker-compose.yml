@@ -5,9 +5,9 @@ networks:
 
 services:
 
-  neo4j_node1:
+  neo4j1:
     image: neo4j:3.1-enterprise
-    container_name: neo4j_node1 
+    container_name: neo4j1 
     networks:
       - lan
     ports:
@@ -20,34 +20,14 @@ services:
       - NEO4J_AUTH=neo4j/neo
       - NEO4J_ha_serverId=1
       - NEO4J_dbms_mode=HA
-      - NEO4J_ha_host_coordination=neo4j_node1:5001
-      - NEO4J_ha_host_data=neo4j_node1:6001
-      - NEO4J_ha_initialHosts=neo4j_node1:5001,neo4j_node2:5555,neo4j_node3:5001
+      - NEO4J_ha_host_coordination=neo4j1:5001
+      - NEO4J_ha_host_data=neo4j1:6001
+      - NEO4J_ha_initialHosts=neo4j1:5001,neo4j2:5555,neo4j3:5001
       - NEO4J_dbms_connector_bolt_listen__address=:7687
 
-  neo4j_node3:
+  neo4j2:
     image: neo4j:3.1-enterprise
-    container_name: neo4j_node3 
-    networks:
-      - lan
-    ports:
-    - "7476:7474"
-    - "8687:8687"
-    environment:
-      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
-      - NEO4J_dbms_memory_pagecache_size=10M
-      - NEO4J_dbms_memory_heap_initial__size=10M
-      - NEO4J_AUTH=neo4j/neo
-      - NEO4J_dbms_mode=HA
-      - NEO4J_ha_serverId=3
-      - NEO4J_ha_initialHosts=neo4j_node1:5001,neo4j_node2:5555,neo4j_node3:5001
-      - NEO4J_ha_host_coordination=neo4j_node3:5001
-      - NEO4J_ha_host_data=neo4j_node3:6001
-      - NEO4J_dbms_connector_bolt_listen__address=:8687
-  
-  neo4j_node2:
-    image: neo4j:3.1-enterprise
-    container_name: neo4j_node2 
+    container_name: neo4j2 
     networks:
       - lan
     ports:
@@ -60,9 +40,28 @@ services:
       - NEO4J_AUTH=neo4j/neo
       - NEO4J_dbms_mode=HA
       - NEO4J_ha_serverId=2
-      - NEO4J_ha_initialHosts=neo4j_node1:5001,neo4j_node2:5555,neo4j_node3:5001
-      - NEO4J_ha_host_coordination=neo4j_node2:5555
-      - NEO4J_ha_host_data=neo4j_node2:6666
+      - NEO4J_ha_initialHosts=neo4j1:5001,neo4j2:5555,neo4j3:5001
+      - NEO4J_ha_host_coordination=neo4j2:5555
+      - NEO4J_ha_host_data=neo4j2:6666
       - NEO4J_dbms_connector_bolt_listen__address=:9687
 
+  neo4j3:
+    image: neo4j:3.1-enterprise
+    container_name: neo4j3 
+    networks:
+      - lan
+    ports:
+    - "7476:7474"
+    - "8687:8687"
+    environment:
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+      - NEO4J_dbms_memory_pagecache_size=10M
+      - NEO4J_dbms_memory_heap_initial__size=10M
+      - NEO4J_AUTH=neo4j/neo
+      - NEO4J_dbms_mode=HA
+      - NEO4J_ha_serverId=3
+      - NEO4J_ha_initialHosts=neo4j1:5001,neo4j2:5555,neo4j3:5001
+      - NEO4J_ha_host_coordination=neo4j3:5001
+      - NEO4J_ha_host_data=neo4j3:6001
+      - NEO4J_dbms_connector_bolt_listen__address=:8687
 
