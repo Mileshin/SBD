@@ -2,8 +2,8 @@ version: '2'
 
 # 3 node cluster
 
-networks:
-  cassandra_lan:
+#networks
+ # cassandra_lan:
 
 services:
   cassandra-node1:
@@ -30,7 +30,7 @@ services:
       - HEAP_NEWSIZE=256M
       - CASSANDRA_CLUSTER_NAME="wiki"
       - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
-      - CASSANDRA_DC=datacenter1
+      - CASSANDRA_DC=datacenter2
       - CASSANDRA_SEEDS=cassandra-node1
 
   cassandra-node3:
@@ -44,7 +44,7 @@ services:
       - HEAP_NEWSIZE=256M
       - CASSANDRA_CLUSTER_NAME="wiki"
       - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
-      - CASSANDRA_DC=datacenter1
+      - CASSANDRA_DC=datacenter3
       - CASSANDRA_SEEDS=cassandra-node1
 
 
