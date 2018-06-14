@@ -1,12 +1,12 @@
-package CRUD;
+package ru.ifmo.andrey.db.wiki.cassandra.CRUD;
 
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.Result;
-import entity.Pages;
-import entity.Spaces;
-import interfaces.PagesAccessor;
+import ru.ifmo.andrey.db.wiki.cassandra.entity.Pages;
+import ru.ifmo.andrey.db.wiki.cassandra.entity.Spaces;
+import ru.ifmo.andrey.db.wiki.cassandra.interfaces.PagesAccessor;
 
 import java.util.Date;
 import java.util.List;
@@ -39,27 +39,23 @@ public class PagesCRUD {
         mapper.delete(name,modified);
     }
 
-    public List<Spaces> getAll(){
-        Result<Spaces> res = pagesAccessor.getAll();
-        return res.all();
+    public Result<Pages> getAll(){
+        return pagesAccessor.getAll();
     }
 
-    public List<Spaces> getAllByName(String name){
-        Result<Spaces> res = pagesAccessor.getAllByName(name);
-        return res.all();
+    public Result<Pages> getAllByName(String name){
+        return pagesAccessor.getAllByName(name);
     }
 
-    public List<Spaces> getAllBetweenTime(String name, Date time1, Date time2){
-        Result<Spaces> res = pagesAccessor.getAllBetweenTime(name, time1, time2);
-        return res.all();
+    public Result<Pages> getAllBetweenTime(String name, Date time1, Date time2){
+        return pagesAccessor.getAllBetweenTime(name, time1, time2);
     }
 
-    public  List<Spaces> getLastRowsByName(String name, int count){
-        Result<Spaces> res = pagesAccessor.getLastRowsByName(name, count);
-        return res.all();
+    public  Result<Pages> getLastRowsByName(String name, int count){
+        return pagesAccessor.getLastRowsByName(name, count);
     }
 
-    public void insertNow(String name, String content, String diff_json){
-        pagesAccessor.insertNow(name,content,diff_json);
+    public void insertNow(String name, String content, String author){
+        pagesAccessor.insertNow(name, content, author);
     }
 }

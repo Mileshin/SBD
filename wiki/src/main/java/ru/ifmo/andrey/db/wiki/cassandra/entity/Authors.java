@@ -1,4 +1,4 @@
-package entity;
+package ru.ifmo.andrey.db.wiki.cassandra.entity;
 
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by Andrey on 06.04.2018.
  */
-@Table(keyspace = "testkeyspace", name = "authors",
+@Table(keyspace = "wiki", name = "authors",
         readConsistency = "ONE",
         writeConsistency = "ONE",
         caseSensitiveKeyspace = false,
@@ -17,9 +17,10 @@ import java.util.Date;
 public class Authors {
     @PartitionKey(0)
     private String login;
+
     @PartitionKey(1)
-    private Date modified;
-    @Column(name = "table_name")
+    private Date modificationTime;
+
     private String tableName;
     private String action;
 
@@ -37,19 +38,17 @@ public class Authors {
         this.tableName = tableName;
     }
 
-    public Date getModified(){
-        return modified;
+    public Date getModificationTime(){
+        return modificationTime;
     }
-    public void setModified(Date modified){
-        this.modified = modified;
+    public void setModificationTime(Date modificationTime){
+        this.modificationTime = modificationTime;
     }
 
     public String getAction(){
         return action;
     }
-
     public void setAction(String action){
         this.action = action;
     }
-
 }

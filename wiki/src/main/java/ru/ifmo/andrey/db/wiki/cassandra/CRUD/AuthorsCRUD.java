@@ -1,13 +1,12 @@
-package CRUD;
+package ru.ifmo.andrey.db.wiki.cassandra.CRUD;
 
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.Result;
-import entity.Authors;
-import entity.Spaces;
-import interfaces.AuthorsAccessor;
-import interfaces.SpacesAccessor;
+import ru.ifmo.andrey.db.wiki.cassandra.entity.Authors;
+import ru.ifmo.andrey.db.wiki.cassandra.entity.Spaces;
+import ru.ifmo.andrey.db.wiki.cassandra.interfaces.AuthorsAccessor;
 
 import java.util.Date;
 import java.util.List;
@@ -41,27 +40,23 @@ public class AuthorsCRUD {
     }
 
 
-    public List<Authors> getAll(){
-        Result<Authors> res = authorsAccessor.getAll();
-        return res.all();
+    public Result<Authors> getAll(){
+        return authorsAccessor.getAll();
     }
 
-  public List<Authors> getAllByLogin(String login){
-        Result<Authors> res = authorsAccessor.getAllByLogin(login);
-        return res.all();
+  public Result<Authors> getAllByLogin(String login){
+        return authorsAccessor.getAllByLogin(login);
     }
 
-    public  List<Authors> getLastRowsByName(String login, int count){
-        Result<Authors> res = authorsAccessor.getLastRowsByLogin(login, count);
-        return res.all();
+    public  Result<Authors> getLastRowsByName(String login, int count){
+        return authorsAccessor.getLastRowsByLogin(login, count);
     }
 
-    public List<Authors> getAllBetweenTime(String login, Date time1, Date time2){
-        Result<Authors> res = authorsAccessor.getAllBetweenTime(login, time1, time2);
-        return res.all();
+    public Result<Authors> getAllBetweenTime(String login, Date time1, Date time2){
+        return authorsAccessor.getAllBetweenTime(login, time1, time2);
     }
 
     public void insertNow(String login, String tableName, String action){
-        authorsAccessor.insertNow(login,tableName,action);
+        authorsAccessor.insertNow(login, tableName, action);
     }
 }

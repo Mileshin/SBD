@@ -1,4 +1,4 @@
-package controlers.datastax;
+package ru.ifmo.andrey.db.wiki.cassandra.controllers.datastax;
 
 import com.datastax.driver.core.*;
 
@@ -18,7 +18,7 @@ public class CassandraConnector {
         }
         cluster = b.build();
 
-        session = cluster.connect();
+        session = cluster.connect("wiki");
     }
 
     public Session getSession() {
