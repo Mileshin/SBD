@@ -1,0 +1,37 @@
+package ru.ifmo.andrey.db.wiki.cassandra.interfaces;
+
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.mapping.Result;
+import com.datastax.driver.mapping.annotations.Accessor;
+import com.datastax.driver.mapping.annotations.Param;
+import com.datastax.driver.mapping.annotations.Query;
+import com.datastax.driver.mapping.annotations.QueryParameters;
+import ru.ifmo.andrey.db.wiki.cassandra.entity.Spaces;
+
+import java.util.Date;
+
+/**
+ * Created by Andrey on 06.04.2018.
+ */
+@Accessor
+public interface SpacesAccessor {
+    @Query("SELECT * FROM spaces")
+    @QueryParameters(consistency="ONE")
+    Result<Spaces> getAll();
+
+    @Query("SELECT * FROM spaces WHERE name = :n")
+    @QueryParameters(consistency="ONE")
+    Result<Spaces> getAllByName(@Param("n") String name);
+
+    @Query("SELECT * FROM spaces where name = :n ORDER BY modificationTime DESC LIMIT :m")
+    @QueryParameters(consistency="ONE")
+    Result<Spaces> getLastRowsByName(@Param("n") String name, @Param("m") int count);
+
+    @Query("SELECT * FROM spaces WHERE name = :n AND modificationTime > :m AND modificationTime < :k")
+    @QueryParameters(consistency="ONE")
+    Result<Spaces> getAllBetweenTime(@Param("n") String name, @Param("m") Date time1, @Param("k") Date time2);
+
+    @Query("INSERT INTO spaces(modificationTime, name, content, author) values (toTimestamp(now()), ?, ?, ?)")
+    @QueryParameters(consistency="ONE")
+    ResultSet insertNow(String name, String content, String author);
+}
